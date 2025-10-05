@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stealth Health India — Himani Raj | Indian on GLP‑1</title>
+  <meta name="description" content="Himani Raj — documenting a real, sustainable weight‑loss journey on GLP‑1 in India. What I eat in a day, weekly check‑ins, wins and stumbles — all honest, all practical." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink-1:#ffe9ee; /* page background top */
+      --pink-2:#ffe3ec; /* page background bottom */
+      --ink:#2e1f27;     /* headings/body ink */
+      --ink-2:#5b4751;   /* helper text */
+      --card:#ffffff;    /* card bg */
+      --chip:#fff5f7;    /* pill bg */
+      --brand:#ff6ea3;   /* accent */
+      --brand-2:#ff9bbd; /* accent 2 */
+      --shadow:0 10px 30px rgba(0,0,0,.06), 0 2px 6px rgba(0,0,0,.04);
+      --radius:22px;
+      --radius-lg:26px;
+      --radius-xl:32px;
+      --container:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink);
+      background: radial-gradient(1200px 600px at 20% 0%, #ffeef2, transparent 60%),
+                  radial-gradient(1200px 800px at 100% 20%, #ffe3ec, transparent 50%),
+                  linear-gradient(180deg,var(--pink-1),var(--pink-2));
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(var(--container), 92vw); margin-inline:auto}
+
+    /* NAV */
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.2) blur(12px)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px 10px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:700}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background:conic-gradient(from 210deg, #ff73a1, #ff4783, #ffa2be, #ff73a1);
+      box-shadow:0 6px 18px rgba(255,90,140,.35);
+    }
+    .home{width:36px;height:36px;display:grid;place-items:center}
+    .home svg{width:22px;height:22px;color:#000}
+    .brand span{font-weight:700; letter-spacing:.2px}
+
+    .navlinks{display:flex; gap:22px; align-items:center}
+    .navlinks a{font-weight:600; opacity:.88}
+    .navlinks a:hover{opacity:1}
+
+    .icons{display:flex; gap:12px; align-items:center}
+    .icon-btn{display:grid; place-items:center; width:36px; height:36px; border-radius:12px; background:var(--card); box-shadow:var(--shadow)}
+    .icon-btn svg{width:18px; height:18px}
+    .icon-btn img{width:18px; height:18px; display:block; object-fit:contain}
+
+    /* mobile menu */
+    .hamburger{display:none}
+    .mobile-menu{position:fixed; top:0; right:0; height:100vh; width:min(88vw,380px); background:var(--card); border-radius:16px 0 0 16px; box-shadow:-18px 0 40px rgba(0,0,0,.08), var(--shadow); padding:18px; transform:translateX(100%); transition:transform .35s ease; z-index:40}
+    @media (max-width: 900px){
+      .nav{padding:12px 8px}
+      .navlinks{display:none}
+      .icons .icon-btn{display:none} /* hide social icons on small screens */
+      .hamburger{display:grid; place-items:center; width:40px; height:40px; border-radius:12px; background:var(--card); box-shadow:var(--shadow)}
+      .mobile-menu.open{transform:translateX(0)}
+      .mobile-menu a{display:block; padding:12px 10px; border-radius:10px; font-weight:600}
+      .mobile-menu a:hover{background:#faf7f8}
+      .mobile-socials{display:flex; gap:12px; align-items:center; margin-top:10px}
+      .mobile-socials .icon-btn{width:40px; height:40px; box-shadow:none; background:#f9f6f7; border-radius:12px}
+      .mobile-socials svg{width:20px; height:20px}
+      .mobile-socials img{width:20px; height:20px; display:block; object-fit:contain}
+    }
+    @media (max-width: 520px){
+      h1{font-size:clamp(28px,7vw,40px)}
+      .chip{padding:8px 12px; font-size:13px}
+      .avatar{width:160px; height:160px}
+      .cta{padding:16px}
+    }
+
+    /* HERO */
+    .section{padding:48px 0}
+    .hero{padding:48px 0 28px}
+    .chip{display:inline-flex; align-items:center; gap:10px; padding:10px 16px; background:var(--chip); color:#5f4250; border-radius:20px; font-weight:600; box-shadow:var(--shadow)}
+    .dot{width:8px;height:8px;border-radius:50%; background:#ff5d9c; box-shadow:0 0 0 4px rgba(255,93,156,.15)}
+    h1{font-size:clamp(34px, 4.5vw, 64px); line-height:1.05; margin:18px 0 0; letter-spacing:.6px}
+
+    /* ABOUT */
+    .grid-2{display:grid; grid-template-columns:1.1fr 2fr; gap:26px}
+    .card{background:var(--card); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:24px}
+    .profile{display:grid; place-items:center; text-align:center; padding:30px}
+    .avatar{
+      width:220px; height:220px; border-radius:50%; background:#f7f2f4; display:grid; place-items:center; box-shadow:inset 0 0 0 14px #fff, var(--shadow);
+    }
+    .avatar svg{width:120px; height:120px; opacity:.9} /* fallback only */
+    .avatar img{width:100%; height:100%; object-fit:cover; border-radius:50%}
+    .profile h3{margin:18px 0 6px}
+    .muted{color:var(--ink-2); font-weight:500}
+
+    .about h2{font-size:36px; margin:0 0 18px}
+    .about .card h3{font-size:48px; margin:6px 0 10px}
+
+    /* LIST SECTIONS */
+    .section h2{font-size:42px; margin:0 0 16px}
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+    @media (max-width: 980px){.grid-2{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
+
+    .video .thumb{aspect-ratio:16/9; width:100%; border-radius:18px; overflow:hidden; background:#111}
+    .video iframe{width:100%; height:100%; border:0}
+    .video .meta{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:10px}
+    .eyebrow{font-weight:600; color:#7a6670; font-size:14px}
+
+    .post .tag{display:inline-flex; align-items:center; padding:6px 10px; background:#faf7f8; border-radius:999px; font-size:12px; margin-right:8px; margin-top:8px}
+    .btn{display:inline-flex; align-items:center; gap:10px; margin-top:16px; padding:12px 16px; border-radius:14px; background:linear-gradient(180deg,#ff77a5,#ff5d9c); color:white; font-weight:700; box-shadow:0 10px 24px rgba(255,93,156,.35);}
+    .btn:hover{transform:translateY(-1px)}
+
+    /* SOCIALS below partnership band */
+    .social-row{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:16px}
+    .social-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+    .social-btn svg{width:22px;height:22px;color:#000}
+    .social-btn img{width:22px;height:22px; display:block; object-fit:contain} 
+
+    /* Right-drawer overlay */
+    .overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:30}
+    .overlay.show{opacity:1; pointer-events:auto}  
+
+    /* CONTACT + FOOTER */
+    .cta{background:var(--card); border-radius:28px; box-shadow:var(--shadow); padding:22px 24px; font-weight:600}
+    footer{padding:26px 0 54px; text-align:center; color:#6f5964}
+
+    /* helpers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header>
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Stealth Health India home">
+        <span class="home" aria-hidden="true" title="Home"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg></span>
+        <span>Stealth Health India</span>
+      </a>
+      <div class="navlinks" role="navigation">
+        <a href="#videos">About me</a>
+        <a href="#news">Videos</a>
+        <a href="#about">Blog</a>
+        <a href="#blog">GLP-1 News</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="icons">
+        <a class="icon-btn" href="https://youtube.com/@stealthhealthindia" target="_blank" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="color:#000">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+            <polygon points="10,8.5 16,12 10,15.5" fill="currentColor"/>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://instagram.com/stealthhealthindia" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.8-.9a1.1 1.1 0 1 1-2.2 0a1.1 1.1 0 0 1 2.2 0z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://x.com/indianonglp1" target="_blank" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h5l4.2 6l5.8-6H23l-7.5 7.7L22 21h-5.1l-4-6.1L7 21H1.5l8.2-8.6L4 3z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/stealthhealthindia/" target="_blank" aria-label="LinkedIn">
+          <img src="16ac4b1b-81df-4a00-bb2b-ffcb53773a6a.png" alt="LinkedIn" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="display:none;color:#000">
+            <rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.3" cy="8.6" r="1.3" fill="currentColor"/>
+            <rect x="7.2" y="10.8" width="2.2" height="6.2" fill="currentColor"/>
+            <path d="M12.4 10.8h2.1v.9c.5-.7 1.3-1.1 2.4-1.1c1.8 0 3.1 1.1 3.1 3.5V17h-2.2v-2.9c0-1.2-.6-1.9-1.6-1.9c-.9 0-1.7.7-1.7 1.9V17h-2.1v-6.2z" fill="currentColor"/>
+          </svg>
+        </a>
+        <button class="hamburger" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu" onclick="toggleMenu()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="mobile-menu" role="menu" aria-hidden="true">
+      <a href="#videos" onclick="toggleMenu(false)">Videos</a>
+      <a href="#store" onclick="toggleMenu(false)">Store</a>
+      <a href="#news" onclick="toggleMenu(false)">GLP‑1 News</a>
+      <a href="#about" onclick="toggleMenu(false)">About</a>
+      <a href="#blog" onclick="toggleMenu(false)">Blog</a>
+      <a href="#contact" onclick="toggleMenu(false)">Contact</a>
+      <div class="mobile-socials" aria-label="Social links">
+        <a class="icon-btn" href="https://youtube.com/@stealthhealthindia" target="_blank" aria-label="YouTube" onclick="toggleMenu(false)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="color:#000">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+            <polygon points="10,8.5 16,12 10,15.5" fill="currentColor"/>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://instagram.com/stealthhealthindia" target="_blank" aria-label="Instagram" onclick="toggleMenu(false)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.8-.9a1.1 1.1 0 1 1-2.2 0a1.1 1.1 0 0 1 2.2 0z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://x.com/indianonglp1" target="_blank" aria-label="X (Twitter)" onclick="toggleMenu(false)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h5l4.2 6l5.8-6H23l-7.5 7.7L22 21h-5.1l-4-6.1L7 21H1.5l8.2-8.6L4 3z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/stealthhealthindia/" target="_blank" aria-label="LinkedIn" onclick="toggleMenu(false)">
+          <img src="16ac4b1b-81df-4a00-bb2b-ffcb53773a6a.png" alt="LinkedIn" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="display:none;color:#000">
+            <rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.3" cy="8.6" r="1.3" fill="currentColor"/>
+            <rect x="7.2" y="10.8" width="2.2" height="6.2" fill="currentColor"/>
+            <path d="M12.4 10.8h2.1v.9c.5-.7 1.3-1.1 2.4-1.1c1.8 0 3.1 1.1 3.1 3.5V17h-2.2v-2.9c0-1.2-.6-1.9-1.6-1.9c-.9 0-1.7.7-1.7 1.9V17h-2.1v-6.2z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+      <div id="overlay" class="overlay" onclick="toggleMenu(false)"></div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top">
+    <section class="hero container">
+      <div class="chip"><span class="dot"></span> Welcome to Stealth Health India</div>
+      <h1>Himani Raj | Indian on GLP‑1</h1>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about section container">
+      <h2>About Me</h2>
+      <div class="grid-2">
+        <div class="card profile" aria-label="Profile Card">
+          <div class="avatar" aria-hidden="true">
+            <img id="avatarImg" src="Website%20Image.jpg.jpg" alt="Decorative image — flowers held behind back" loading="lazy" />
+            <svg id="avatarSvg" viewBox="0 0 256 256" style="display:none"></svg>
+          </div>
+          <h3>Himani Raj</h3>
+          <div class="muted">Indian on GLP‑1 | Stealth Health India</div>
+        </div>
+
+        <article class="card">
+          <h3>Namaste!</h3>
+          <p>I'm <strong>Himani</strong> — currently on Mounjaro (Tirzepatide), a GLP‑1 medication used for diabetes and weight loss. I’m documenting my real, sustainable weight‑loss journey on Mounjaro / GLP‑1 in India. Here you will find:</p>
+          <ul class="muted" style="margin:0 0 8px 18px;">
+            <li>🍴 What I eat in a day on Mounjaro</li>
+            <li>🥗 Indian diet & easy weight loss recipes</li>
+            <li>💉 Updates on Mounjaro / GLP‑1 progress</li>
+            <li>⚖️ Honest talk about side effects, struggles & wins</li>
+          </ul>
+          <p>Welcome to <strong>Stealth Health India</strong> — transformation that's quiet, but fierce. It won’t be about quick fixes, but my real weight loss journey — one dose at a time.</p>
+          <p>Follow along on YouTube and Instagram for day‑to‑day updates. If you're on a similar path, I hope this space helps you feel less alone and more equipped.</p>
+          <p>We are in this together! 🤗💪🏻</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Latest Videos -->
+    <section id="videos" class="section container">
+      <h2>Latest Videos</h2>
+      <div id="videoGrid" class="cards"></div>
+    </section>
+
+    <!-- Blog -->
+    <section id="blog" class="section container">
+      <h2>Blog</h2>
+      <div id="blogGrid" class="cards"></div>
+    </section>
+
+    <!-- GLP-1 News -->
+    <section id="news" class="section container">
+      <h2>GLP‑1 News</h2>
+      <div id="newsGrid" class="cards" style="grid-template-columns:1fr"></div>
+    </section>
+
+    <!-- Contact band -->
+    <section id="contact" class="section container" aria-label="Stay in touch">
+      <div class="cta">Have questions or partnership ideas? Reach me at <a href="mailto:stealthhealth.in@gmail.com">stealthhealth.in@gmail.com</a> or DM me on socials.</div>
+      <div class="social-row" aria-label="Social links">
+        <a class="social-btn" href="https://youtube.com/@stealthhealthindia" target="_blank" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+            <polygon points="10,8.5 16,12 10,15.5" fill="currentColor"/>
+          </svg>
+        </a>
+        <a class="social-btn" href="https://instagram.com/stealthhealthindia" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5.8-.9a1.1 1.1 0 1 1-2.2 0a1.1 1.1 0 0 1 2.2 0z"/></svg>
+        </a>
+        <a class="social-btn" href="https://x.com/stealthhealthin" target="_blank" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h5l4.2 6l5.8-6H23l-7.5 7.7L22 21h-5.1l-4-6.1L7 21H1.5l8.2-8.6L4 3z"/></svg>
+        </a>
+        <a class="social-btn" href="https://www.linkedin.com/in/stealthhealthindia/" target="_blank" aria-label="LinkedIn">
+          <img src="16ac4b1b-81df-4a00-bb2b-ffcb53773a6a.png" alt="LinkedIn" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="display:none;color:#000">
+            <rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.3" cy="8.6" r="1.3" fill="currentColor"/>
+            <rect x="7.2" y="10.8" width="2.2" height="6.2" fill="currentColor"/>
+            <path d="M12.4 10.8h2.1v.9c.5-.7 1.3-1.1 2.4-1.1c1.8 0 3.1 1.1 3.1 3.5V17h-2.2v-2.9c0-1.2-.6-1.9-1.6-1.9c-.9 0-1.7.7-1.7 1.9V17h-2.1v-6.2z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2025 Stealth Health India — Built with <span aria-hidden="true">💗</span>. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Simple mobile menu toggle
+    function toggleMenu(force){
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('overlay');
+      const btn = document.querySelector('.hamburger');
+      const isOpen = menu.classList.contains('open');
+      const open = typeof force === 'boolean' ? force : !isOpen;
+      menu.classList.toggle('open', open);
+      overlay.classList.toggle('show', open);
+      btn.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      menu.setAttribute('aria-hidden', (!open).toString());
+    }
+
+    // --- Data you can edit without touching markup ---
+    // Accepts raw IDs OR full YouTube/Shorts URLs.
+    const videos = [
+      { title: 'Top 5 Supplements for Weightloss', id: 'https://www.youtube.com/shorts/K-wj-Ce0fug' },
+      { title: 'How to use Mounjaro Pen', id: 'https://www.youtube.com/shorts/qXqfMWBucBo' },
+      { title: 'What I eat in a Day for Weightloss', id: 'https://www.youtube.com/shorts/W-R83efDtmw' }
+    ];
+
+    const posts = [
+      { title: 'Coming Soon', date: '2025-10-05', excerpt: '', tags:['intro','updates'] },
+      { title: 'Coming Soon', date: '2025-10-05', excerpt: '', tags:['intro','updates'] },
+      { title: 'Coming Soon', date: '2025-10-05', excerpt: '', tags:['intro','updates'] }
+    ];
+
+    const news = [
+      { title: 'India becomes ground zero for weight-loss drug race', date: '2025-07-22', summary: 'India is rapidly transforming into a crucial focal point for the global weight management industry.', source:'https://economictimes.indiatimes.com/industry/healthcare/biotech/healthcare/india-glp1-weight-loss-drugs-mounjaro-wegovy-semaglutide-patent-expiry-obesity/articleshow/122829113.cms?from=mdr' }
+    ];
+
+    // --- Helpers ---
+    const $ = (q) => document.querySelector(q);
+
+    // Normalize various YouTube URL formats to a bare video ID
+    function ytId(input){
+      if(!input) return '';
+      const s = String(input).trim();
+      // youtu.be/ID
+      let m = s.match(/youtu\.be\/([\w-]{6,})/i); if(m) return m[1];
+      // youtube.com/watch?v=ID
+      m = s.match(/[?&]v=([\w-]{6,})/i); if(m) return m[1];
+      // youtube.com/shorts/ID
+      m = s.match(/shorts\/([\w-]{6,})/i); if(m) return m[1];
+      // assume already an ID
+      return s;
+    }
+
+    // ---- Tiny tests for ytId (logs to console) ----
+    (function testYtId(){
+      const cases = [
+        ['dQw4w9WgXcQ','dQw4w9WgXcQ'],
+        ['https://youtu.be/dQw4w9WgXcQ','dQw4w9WgXcQ'],
+        ['https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=1s','dQw4w9WgXcQ'],
+        ['https://www.youtube.com/shorts/K-wj-Ce0fug','K-wj-Ce0fug']
+      ];
+      cases.forEach(([inp,exp],i)=>{
+        const got = ytId(inp);
+        console.assert(got===exp, 'ytId test failed', {case:i, inp, exp, got});
+      });
+      console.log('ytId tests complete');
+    })();
+
+    // ---- Extra tests: validate posts shape ----
+    (function testPosts(){
+      const ok = posts.every(p => typeof p.title==='string' && typeof p.date==='string' && 'excerpt' in p && Array.isArray(p.tags));
+      console.assert(ok, 'posts array has invalid shape', {posts});
+    })();
+
+    // ---- Avatar image resolver: tries common filename variants, falls back to SVG ----
+    (function resolveAvatar(){
+      const img = document.getElementById('avatarImg');
+      const svg = document.getElementById('avatarSvg');
+      if(!img) return;
+      // Start with current src, then try common variations (spaces vs %20, case, extensions)
+      const baseCandidates = [
+        img.getAttribute('src') || '',
+        'Website Image.jpg.jpg', 'Website%20Image.jpg.jpg', 'Website Image.jpg', 'Website%20Image.jpg',
+        'Website Image.jpeg', 'Website%20Image.jpeg',
+        'Website Image.PNG', 'Website Image.png', 'Website%20Image.PNG', 'Website%20Image.png',
+        'website image.jpg', 'website-image.jpg', 'website-image.png'
+      ];
+      const candidates = baseCandidates.filter((v,i,a)=>v && a.indexOf(v)===i);
+      let idx = 0;
+      function tryNext(){
+        idx++;
+        if(idx < candidates.length){
+          const next = candidates[idx];
+          console.warn('[avatar] trying', next);
+          img.src = next;
+        } else {
+          console.error('[avatar] all candidates failed; showing fallback SVG');
+          img.style.display = 'none';
+          if(svg){ svg.style.display = 'block'; }
+        }
+      }
+      img.addEventListener('error', tryNext);
+    })();
+
+    const videoGrid = $('#videoGrid');
+    const blogGrid  = $('#blogGrid');
+    const newsGrid  = $('#newsGrid');
+
+    videos.forEach(v => {
+      const id = ytId(v.id || v.url || v);
+      if(!id) return;
+      const card = document.createElement('article');
+      card.className = 'card video';
+      card.innerHTML = `
+        <div class="thumb">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/${id}" title="${v.title || 'YouTube Video'}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <div>
+            <div style="font-weight:700">${v.title || 'Video'}</div>
+            <div class="eyebrow">YouTube • ID: ${id}</div>
+          </div>
+          <a class="btn" href="https://youtu.be/${id}" target="_blank" aria-label="Watch on YouTube">Watch</a>
+        </div>`;
+      videoGrid.appendChild(card);
+    });
+
+    posts.forEach(p => {
+      const card = document.createElement('article');
+      card.className = 'card post';
+      const tags = p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+      card.innerHTML = `
+        <div style="font-weight:700; font-size:20px">${p.title}</div>
+        <div class="eyebrow" style="margin:6px 0 10px">${p.date}</div>
+        <p class="muted" style="margin:0 0 8px">${p.excerpt}</p>
+        <div>${tags}</div>
+        <a class="btn" href="#" aria-label="Read ${p.title}">Read</a>`;
+      blogGrid.appendChild(card);
+    });
+
+    news.forEach(n => {
+      const card = document.createElement('article');
+      card.className = 'card post';
+      card.innerHTML = `
+        <div style="font-weight:700; font-size:22px">${n.title}</div>
+        <div class="eyebrow" style="margin:6px 0 10px">${n.date}</div>
+        <p class="muted" style="margin:0 0 10px">${n.summary}</p>
+        <span class="tag">Your Source</span>
+        <br />
+        <a class="btn" href="${n.source}" target="_blank" aria-label="Read source">Read Source</a>`;
+      newsGrid.appendChild(card);
+    });
+
+    // Draw a cute cat in the avatar circle when no image is present
+    (function drawCat(){
+      const svg = document.querySelector('.avatar svg');
+      if(!svg) return; // image provided; skip fallback SVG
+      svg.innerHTML = '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd1e2"/><stop offset="1" stop-color="#ffa7c3"/></linearGradient></defs>'+
+        '<circle cx="128" cy="128" r="120" fill="url(#g)"/>'+
+        '<path d="M71 75c7-7 21-4 31 2c23-12 47-14 64 4c19-14 35-12 44 2c2 10-3 23-14 37c7 12 11 26 11 41c0 35-32 64-79 64s-79-29-79-64c0-15 4-29 11-41c-11-14-16-27-14-37c2-4 12-13 25-8zM76 145a8 8 0 1 0 16 0a8 8 0 0 0-16 0zm88 0a8 8 0 1 0 16 0a8 8 0 0 0-16 0zM92 173c20 11 52 11 72 0c4-2 9 2 5 6c-22 22-60 22-82 0c-4-4 1-8 5-6z" fill="#2e1f27" opacity=".9"/>';
+    })();
+  </script>
+</body>
+</html>
