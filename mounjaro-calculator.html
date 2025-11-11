@@ -43,11 +43,10 @@
     .row{display:grid;grid-template-columns:1fr;gap:12px}
     @media(min-width:600px){.row{grid-template-columns:1fr 1fr}}
 
-    .hint{font-size:12px;color:var(--muted)}
     .inline{display:flex;align-items:center;gap:8px}
 
     .result{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:700px){.result{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:700px){.result{grid-template-columns:repeat(2,1fr)}}
     .metric{background:var(--field);border:1px dashed var(--border);border-radius:14px;padding:14px}
     .metric .k{font-size:13px;color:var(--muted)}
     .metric .v{font-size:22px;font-weight:700;margin-top:4px}
@@ -100,33 +99,6 @@
             <label for="useGolden">Using Golden Dose</label>
           </div>
         </div>
-        <details style="margin-top:12px">
-          <summary>Advanced settings</summary>
-          <div class="row">
-            <div>
-              <label for="clicksPerFull">Clicks per labeled dose</label>
-              <input id="clicksPerFull" type="number" min="1" step="1" value="60" />
-            </div>
-            <div>
-              <label for="dosesPerPen">Labeled doses per pen</label>
-              <input id="dosesPerPen" type="number" min="1" step="1" value="4" />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="goldenClicks">Extra clicks when overfill is included</label>
-              <input id="goldenClicks" type="number" min="0" step="1" value="60" />
-            </div>
-            <div>
-              <label for="rounding">Rounding mode</label>
-              <select id="rounding">
-                <option value="round" selected>Nearest</option>
-                <option value="floor">Down</option>
-                <option value="ceil">Up</option>
-              </select>
-            </div>
-          </div>
-        </details>
       </section>
 
       <section class="card">
@@ -134,7 +106,6 @@
         <div class="result">
           <div class="metric"><div class="k">Clicks per injection</div><div class="v" id="outClicks">—</div></div>
           <div class="metric"><div class="k">Injections per pen</div><div class="v" id="outInj">—</div></div>
-          <div class="metric"><div class="k">Pen lifespan (days)</div><div class="v" id="outDays">—</div></div>
         </div>
         <p class="foot"><strong class="warn">Note:</strong> Educational use only. Consult your clinician before adjusting doses.</p>
       </section>
@@ -144,7 +115,7 @@
       <h2>Disclaimers</h2>
       <ul>
         <li>This is not medical advice. Talk to your prescriber about dosing and titration.</li>
-        <li>Click conventions vary; adjust advanced settings as needed.</li>
+        <li>Click conventions vary; default internal settings are fixed for accuracy.</li>
         <li>Overfill ("golden dose") is manufacturer overage. Do not extract or reuse it.</li>
       </ul>
     </section>
@@ -152,73 +123,83 @@
 
 <script>
 (function(){
+  function byId(id){return document.getElementById(id) || null;}
+
   const els = {
-    penStrength: byId('penStrength'), desiredDose: byId('desiredDose'), interval: byId('interval'), useGolden: byId('useGolden'), clicksPerFull: byId('clicksPerFull'), dosesPerPen: byId('dosesPerPen'), goldenClicks: byId('goldenClicks'), rounding: byId('rounding'), outClicks: byId('outClicks'), outInj: byId('outInj'), outDays: byId('outDays'), resetBtn: byId('resetBtn'), shareBtn: byId('shareBtn') };
+    penStrength: byId('penStrength'),
+    desiredDose: byId('desiredDose'),
+    interval: byId('interval'),
+    useGolden: byId('useGolden'),
+    outClicks: byId('outClicks'),
+    outInj: byId('outInj'),
+    resetBtn: byId('resetBtn'),
+    shareBtn: byId('shareBtn')
+  };
 
   const params = new URLSearchParams(location.search);
-  const fields = ['penStrength','desiredDose','interval','useGolden','clicksPerFull','dosesPerPen','goldenClicks','rounding'];
   const storeKey = 'shi-injection-calc-v1';
 
-  function byId(id){return document.getElementById(id)}
-  function roundToMode(x,m){if(!isFinite(x))return NaN;if(m==='floor')return Math.floor(x);if(m==='ceil')return Math.ceil(x);return Math.round(x)}
-  function fmt(n,d=0){if(n==null||isNaN(n))return '—';return Number(n).toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:d})}
-
-  function load(){let data={};if(params.size){fields.forEach(k=>{if(params.has(k))data[k]=params.get(k)})}else{try{data=JSON.parse(localStorage.getItem(storeKey)||'{}')}catch{}}
-    Object.entries(data).forEach(([k,v])=>{if(!(k in els))return;const el=els[k];if(el.type==='checkbox')el.checked=(v==='true'||v===true);else el.value=v})}
-  function save(){const d={};fields.forEach(k=>{const el=els[k];d[k]=(el.type==='checkbox')?String(el.checked):el.value});localStorage.setItem(storeKey,JSON.stringify(d))}
+  function roundToMode(x){
+    if(!isFinite(x)) return NaN;
+    return Math.round(x);
+  }
+  function fmt(n, digits=0){
+    if(n == null || isNaN(n)) return '—';
+    return Number(n).toLocaleString(undefined,{maximumFractionDigits:digits, minimumFractionDigits:digits});
+  }
 
   function compute(){
-    const ps=+els.penStrength.value||0;
-    const dd=+els.desiredDose.value||0;
-    let iv=Math.max(1,Math.floor(+els.interval.value||30));
-    if(iv>30){iv=30;els.interval.value=30;}
-    const cpf=Math.max(1,Math.floor(+els.clicksPerFull.value||60));
-    const dpp=Math.max(1,Math.floor(+els.dosesPerPen.value||4));
-    const gk=Math.max(0,Math.floor(+els.goldenClicks.value||0));
-    const inc=!!els.useGolden.checked;
-    const r=els.rounding.value;
-    const mgpc=ps/cpf;
-    let cpi=dd/(mgpc||NaN);
-    cpi=roundToMode(cpi,r);
-    const total=dpp*cpf+(inc?gk:0);
-    const inj=Math.floor(total/Math.max(1,cpi));
-    const days=inj*iv;
-    els.outClicks.textContent=isFinite(cpi)&&cpi>0?fmt(cpi)+' clicks':'—';
-    els.outInj.textContent=inj>0?fmt(inj):'—';
-    els.outDays.textContent=days>0?fmt(days)+' days':'—';
-    save();
+    const penStrength = +(els.penStrength?.value || 0);
+    const desired = +(els.desiredDose?.value || 0);
+    let interval = Math.max(1, Math.floor(+(els.interval?.value || 30)));
+    if(interval > 30 && els.interval){ interval = 30; els.interval.value = 30; }
+
+    const clicksPerFull = 60;
+    const dosesPerPen = 4;
+    const goldenClicks = 60;
+    const includeGolden = !!(els.useGolden && els.useGolden.checked);
+
+    const mgPerClick = penStrength / clicksPerFull;
+    let clicksPerInjection = desired / (mgPerClick || NaN);
+    clicksPerInjection = roundToMode(clicksPerInjection);
+
+    let totalClicks = dosesPerPen * clicksPerFull + (includeGolden ? goldenClicks : 0);
+    const injectionsPerPen = Math.floor(totalClicks / Math.max(1, clicksPerInjection));
+
+    if(els.outClicks) els.outClicks.textContent = (isFinite(clicksPerInjection) && clicksPerInjection > 0) ? fmt(clicksPerInjection) + ' clicks' : '—';
+    if(els.outInj) els.outInj.textContent = injectionsPerPen > 0 ? fmt(injectionsPerPen) : '—';
   }
 
-  els.resetBtn.onclick=function(){
-    if(!confirm('Reset all fields?'))return;
-    ['penStrength','desiredDose','interval','clicksPerFull','dosesPerPen','goldenClicks'].forEach(id=>{
-      const el=els[id];
-      const def={penStrength:'10',desiredDose:'7.5',interval:'30',clicksPerFull:'60',dosesPerPen:'4',goldenClicks:'60'};
-      el.value=def[id];
-    });
-    els.useGolden.checked=false;
-    els.rounding.value='round';
-    save();
-    compute();
-  }
-
-  els.shareBtn.onclick=function(){
-    const q=new URLSearchParams();
-    fields.forEach(k=>{
-      const el=els[k];
-      const v=(el.type==='checkbox')?String(el.checked):el.value;
-      q.set(k,v);
-    });
-    navigator.clipboard.writeText(location.origin+location.pathname+'?'+q.toString());
-  }
-
-  fields.forEach(id=>{
-    const el=els[id];
-    el.addEventListener('input',compute);
-    el.addEventListener('change',compute);
+  ['penStrength','desiredDose','interval','useGolden'].forEach(id => {
+    const el = els[id];
+    if(el){ el.addEventListener('input', compute); el.addEventListener('change', compute); }
   });
 
-  load();
+  if(els.resetBtn){
+    els.resetBtn.addEventListener('click', function(){
+      if(!confirm('Reset all fields?')) return;
+      if(els.penStrength) els.penStrength.value = '10';
+      if(els.desiredDose) els.desiredDose.value = '7.5';
+      if(els.interval) els.interval.value = '30';
+      if(els.useGolden) els.useGolden.checked = false;
+      compute();
+    });
+  }
+
+  if(els.shareBtn){
+    els.shareBtn.addEventListener('click', function(){
+      const q = new URLSearchParams();
+      ['penStrength','desiredDose','interval','useGolden'].forEach(k => {
+        const el = els[k];
+        const val = (el.type === 'checkbox') ? String(el.checked) : el.value;
+        q.set(k, val);
+      });
+      const url = location.origin + location.pathname + '?' + q.toString();
+      navigator.clipboard?.writeText(url).catch(()=>{});
+      console.log('Sharable link:', url);
+    });
+  }
+
   compute();
 })();
 </script>
